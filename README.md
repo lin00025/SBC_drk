@@ -7,6 +7,7 @@ The sky background are scattered lights of the astronomical object, assumed to b
 The dark current is the thermal noise of the instrument, which has a spatial pattern that the background level is higher at the center region of the image.
 
 ![plot](./figur/dark_flt.png)
+
 *dark current is higher at the center region.  The horizontal lines are bad pixels with pixel value = 0 *
 
 This code is a modified version of [GitHub Pages](https://github.com/sourabhsc/dark_subtraction_sbc). To fit my purpose, the annulus of the background do not have to centered at the center of the image. (The object is not in the center of the image.) 
