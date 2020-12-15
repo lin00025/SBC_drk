@@ -69,4 +69,4 @@ note2:
 *  A result of sky subtraciton only.  As we see, the outter part of the image is over-subtract.  This exposure has temperature =20.4.  
 
 ![plot](./figur/result3.png)
-*  If we apply sky+dark subtraction instead,  the resulted background curve will be flat.  But it can either be interprete as the image in fact has dark current contribution, or simply because we have more paramters to fit with.
+*  If we apply sky+dark subtraction instead,  the resulted background curve will be flat.  But it can either be interprete as the dark current in fact contribution to the background, or simply because we have more paramters to fit with.
