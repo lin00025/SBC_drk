@@ -10,7 +10,7 @@ The dark current is the thermal noise of the instrument, which has a spatial pat
 
 * dark current is higher at the center region.  The horizontal lines are bad pixels with pixel value = 0 
 
-This code is a modified version of [GitHub Pages](https://github.com/sourabhsc/dark_subtraction_sbc). To fit my purpose, the annulus of the background do not have to centered at the center of the image. (The object is not in the center of the image.) 
+This code is a modified version of [Sourabh's code](https://github.com/sourabhsc/dark_subtraction_sbc). To fit my purpose, the annulus of the background do not have to centered at the center of the image. (The object is not in the center of the image.) 
 
 In this code, there are two ways to remove the background: 
 ## 1. Sky subtraction only: ##
@@ -47,7 +47,7 @@ note1: In principle, having a more delicate grid of A and K will give you a bett
 note2: 
 
 
-[1] to download dark images: [link](https://stsci.edu/hst/instrumentation/acs/calibration)
+[1] to download dark images: [HST calibration](https://stsci.edu/hst/instrumentation/acs/calibration)
 
 ## Steps of using this code ##
 0. install numpy, astropy, pathlib. 
