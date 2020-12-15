@@ -8,7 +8,7 @@ The dark current is the thermal noise of the instrument, which has a spatial pat
 
 ![plot](./figur/dark_flt.png)
 
-*dark current is higher at the center region.  The horizontal lines are bad pixels with pixel value = 0 *
+* dark current is higher at the center region.  The horizontal lines are bad pixels with pixel value = 0 
 
 This code is a modified version of [GitHub Pages](https://github.com/sourabhsc/dark_subtraction_sbc). To fit my purpose, the annulus of the background do not have to centered at the center of the image. (The object is not in the center of the image.) 
 
@@ -63,11 +63,11 @@ note2:
 5. An analysis figur will be created in [PATH_TO_DATA]/product/plot/. 
 
 ![plot](./figur/result1.png)
-*  On the left panel, y axis is the sum of the pixel values within the annulus of r_in = x, r_out = x+1. The white annulus on the right is the region that involve the background subtraction.  *
+*  On the left panel, y axis is the sum of the pixel values within the annulus of r_in = x, r_out = x+1. The white annulus on the right is the region that involve the background subtraction.  
 
 ![plot](./figur/result2.png)
-*  A result of sky subtraciton only.  As we see, the outter part of the image is over-subtract.  This exposure has temperature =20.4.  *
-*  You can blame on the shape and size of the background apreture, but the curve close to the source is flat. *
+*  A result of sky subtraciton only.  As we see, the outter part of the image is over-subtract.  This exposure has temperature =20.4.  
+*  You can blame on the shape and size of the background apreture, but the curve close to the source is flat. 
 
 ![plot](./figur/result3.png)
-*  If we apply sky+dark subtraction instead,  the resulted background curve will be flat.  But it can either be interprete as the image in fact has dark current contribution, or simply because we have more paramters to fit with.*
+*  If we apply sky+dark subtraction instead,  the resulted background curve will be flat.  But it can either be interprete as the image in fact has dark current contribution, or simply because we have more paramters to fit with.
