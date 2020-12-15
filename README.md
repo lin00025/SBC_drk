@@ -6,10 +6,11 @@ The main sources of the background are sky background and dark current.
 The sky background are scattered lights of the astronomical object, assumed to be uniformed in space. 
 The dark current is the thermal noise of the instrument, which has a spatial pattern that the background level is higher at the center region of the image.
 
-![plot](./figur/dark_flt.png | width=50)
-*dark current is higher at the center region.  The horizontal lines are bad pixels with pixel value = 0 *
+![plot](./figur/dark_flt.png)
 
-This code is a modified version of [GitHub Pages](https://github.com/sourabhsc/dark_subtraction_sbc). To fit my purpose, the annulus of the background do not have to centered at the center of the image. (The object is not in the center of the image.) 
+* dark current is higher at the center region.  The horizontal lines are bad pixels with pixel value = 0 
+
+This code is a modified version of [Sourabh's code](https://github.com/sourabhsc/dark_subtraction_sbc). To fit my purpose, the annulus of the background do not have to centered at the center of the image. (The object is not in the center of the image.) 
 
 In this code, there are two ways to remove the background: 
 ## 1. Sky subtraction only: ##
@@ -46,7 +47,7 @@ note1: In principle, having a more delicate grid of A and K will give you a bett
 note2: 
 
 
-[1] to download dark images: [link](https://stsci.edu/hst/instrumentation/acs/calibration)
+[1] to download dark images: [HST calibration](https://stsci.edu/hst/instrumentation/acs/calibration)
 
 ## Steps of using this code ##
 0. install numpy, astropy, pathlib. 
@@ -61,12 +62,12 @@ note2:
 
 5. An analysis figur will be created in [PATH_TO_DATA]/product/plot/. 
 
-![plot](./figur/result1.png | width=50)
-*  On the left panel, y axis is the sum of the pixel values within the annulus of r_in = x, r_out = x+1. The white annulus on the right is the region that involve the background subtraction.  *
+![plot](./figur/result1.png)
+*  On the left panel, y axis is the sum of the pixel values within the annulus of r_in = x, r_out = x+1. The white annulus on the right is the region that involve the background subtraction.  
 
-![plot](./figur/result2.png | width=50)
-*  A result of sky subtraciton only.  As we see, the outter part of the image is over-subtract.  This exposure has temperature =20.4.  *
-*  You can blame on the shape and size of the background apreture, but the curve close to the source is flat. *
+![plot](./figur/result2.png)
+*  A result of sky subtraciton only.  As we see, the outter part of the image is over-subtract.  This exposure has temperature =20.4.  
+*  You can blame on the shape and size of the background apreture, but the curve close to the source is flat. 
 
-![plot](./figur/result3.png | width=50)
-*  If we apply sky+dark subtraction instead,  the resulted background curve will be flat.  But it can either be interprete as the image in fact has dark current contribution, or simply because we have more paramters to fit with.*
+![plot](./figur/result3.png)
+*  If we apply sky+dark subtraction instead,  the resulted background curve will be flat.  But it can either be interprete as the image in fact has dark current contribution, or simply because we have more paramters to fit with.
