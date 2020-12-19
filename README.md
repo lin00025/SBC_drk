@@ -6,7 +6,7 @@ The main sources of the background are sky background and dark current.
 The sky background are scattered lights of the astronomical object, assumed to be uniformed in space. 
 The dark current is the thermal noise of the instrument, which has a spatial pattern that the background level is higher at the center region of the image.
 
-![plot](./figur/dark_flt.png)
+![plot](./figure/dark_flt.png)
 
 * dark current is higher at the center region.  The horizontal lines are bad pixels with pixel value = 0 
 
@@ -60,13 +60,13 @@ note2:
 
 4. The result will be in [PATH_TO_DATA]/product/, named as rootname_fd.fits. 
 
-5. An analysis figur will be created in [PATH_TO_DATA]/product/plot/. 
+5. An analysis figure will be created in [PATH_TO_DATA]/product/plot/. 
 
-![plot](./figur/result1.png)
+![plot](./figure/result1.png)
 *  On the left panel, y axis is the sum of the pixel values within the annulus of r_in = x, r_out = x+1. The white annulus on the right is the region that involve the background subtraction.  
 
-![plot](./figur/result2.png)
+![plot](./figure/result2.png)
 *  A result of sky subtraciton only.  As we see, the outter part of the image is over-subtract.  This exposure has temperature =20.4.  
 
-![plot](./figur/result3.png)
+![plot](./figure/result3.png)
 *  If we apply sky+dark subtraction instead,  the resulted background curve will be flat.  But it can either be interprete as the dark current in fact contribution to the background, or simply because we have more paramters to fit with.
