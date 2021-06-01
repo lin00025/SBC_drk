@@ -14,7 +14,7 @@ This code is a modified version of [Sourabh's code](https://github.com/sourabhsc
 
 In this code, there are two ways to remove the background: 
 ## 1. Sky subtraction only: ##
-The temperature of the detector is recorded in the header.  If the temperature is low enough, we can neglect the dark current and simply subtract a constant value throughout the image. The cutoff temperature is around 22 degree.  When temperature <22,  we produce annuli from r_in to r_out with width of 1, where r_in = 150 and r_out =250. We calculate the mean of the pixel value inside the annulus, and take the median of all mean as the sky background. 
+The temperature of the detector is recorded in the header.  If the temperature is low enough, we can neglect the dark current and simply subtract a constant value throughout the image. The cutoff temperature is around 22 degree.  When temperature <22,  we produce annuli from r_in to r_out with width of 1, where r_in = rf and r_out =rf+sky_apt_size. We calculate the mean of the pixel value inside the annulus, and take the median of all mean as the sky background. 
 
 note1: This calculation slightly prefer the pixels closer to the object. If the dark current is truely negligible, this is a monor concern. 
 note2: Taking median of the means of all annulus help us avoid the unidentified hot pixels.
@@ -25,7 +25,7 @@ If the science exposure temperature > temp_cutoff (= 22, empirically), we will s
 
 sci_fd(i, j) = sci_flt(i, j) - A * ts/td * drk_flt(i, j) - K
 
-where sci_fd(i, j) is the product image, sci_flt(i, j) is the science flat image. 
+where sci_fd(i, j) is the product image, sci_flt(i, j) is the original science flat image. 
 A is the scale paramter (scalar) for the dark current. 
 drk_flt(i, j) is the dark flat image, where you can download the raw image and reduce using acstool.[1] 
 ts, td are the exposure time of the science exposure and dark image, respectively.  (td = 1000 seconds)
@@ -33,40 +33,33 @@ K is the constant sky background.
 
 to determine the parameter A and sky, we find the minimum of the residue : 
 
-residue = Sum[ Ring_i((sci - A * ts/td * drk - K)^2)  for i in range(r_in, r_out)  ]
+residue = Sum[ ((sci - A * ts/td * drk - K)^2)]
 
 through out the paramter space of A~[0 : 2] and K~[0 : 0.02].  
-
 The range of parameter spaces of A and K are decided empirically again. It is important to check if the values we pick hit the boundary or not. 
-Ring_i is the annulus with the width of 1. We create annuli from r_in to r_lim.  ( r_lim is the radius where it cuts the edge of the image.) 
-For the pixels inside each rings, we calculate the mean of " (sci(i, j) - A * ts/td * drk(i, j) - K)^2 ", then sum these means as residue. 
 
-If we sum over the whole annulus from r_in to r_out without choping it into sub-annulus with the width of 1, we might find solutions that has higher background at  the inner region, and lower (negative) background at oputter region, but cancel each other in the sum.  Choping into sub-annulus allow us to find solutions such that each residual of the rings are close to zero. 
 
 note1: In principle, having a more delicate grid of A and K will give you a better result.  However this is not really efficient, and the result looks similar. 
-note2: 
+note2: Since most of the pixels in the flat images have value =0, we mask the galaxy, bin(reshape) the images by every 25*25 pixels, and ignore the side of the images (1024 x 1024  --> 40*40,  with the edge 24 pixels being chopped). The we conisder the residue of the entire frame. 
 
 
 [1] to download dark images: [HST calibration](https://stsci.edu/hst/instrumentation/acs/calibration)
 
 ## Steps of using this code ##
-0. install numpy, astropy, pathlib. 
+0. install numpy, astropy, pathlib, etc.  
 
 1. put the fits file (rootname_flt.fits) you want to reduce in [PATH_TO_DATA], and assign flt_dir='[PATH_TO_DATA]'
 
 2. put the dark_flt images that corresponds to the data in [PATH_TO_DRK], and assign flt_dir='[PATH_TO_DRK]'
 
-3. Some paramters that's easy to adjust includes temperature cutoff "temp_cutoff = 22", size of the inner radius " rf = 150 " (which is r_in), number of annuli for the sky subtraction "sky_apt_size = 100" (r_in + sky_apt_size = r_out). 
+3. Some paramters that's easy to adjust includes temperature cutoff "temp_cutoff = 22", size of the galaxy mask " rf = 150 " (which is r_in), size of the annulus for the sky subtraction "sky_apt_size = 100". 
 
 4. The result will be in [PATH_TO_DATA]/product/, named as rootname_fd.fits. 
 
 5. An analysis figure will be created in [PATH_TO_DATA]/product/plot/. 
 
-![plot](./figure/result1.png)
-*  On the left panel, y axis is the sum of the pixel values within the annulus of r_in = x, r_out = x+1. The white annulus on the right is the region that involve the background subtraction.  
+![plot](./figure/25.png)
+*  The plot created in the code. All three frames are a 10-pixel-Gaussian smoothed images.  THe first row is the flt image, the second row is the reduced image, and the third row is the ratio (reduced/flat).   The black circle marks where the galaxy is masked.    
 
-![plot](./figure/result2.png)
-*  A result of sky subtraciton only.  As we see, the outter part of the image is over-subtract.  This exposure has temperature =20.4.  
+* The process of making plot is extremely slow.  I'm sorry.
 
-![plot](./figure/result3.png)
-*  If we apply sky+dark subtraction instead,  the resulted background curve will be flat.  But it can either be interprete as the dark current in fact contribution to the background, or simply because we have more paramters to fit with.
